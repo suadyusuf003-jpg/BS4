@@ -1,27 +1,21 @@
-import Room from "../models/ Room.js";
-import Booking from "../models/Booking.js";
+import jwt from "jsonwebtoken";
 
-// GET ALL ROOMS
-export const getRooms = async (req, res) => {
-  try {
-    const rooms = await Room.find();
-    res.json(rooms);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+const JWT_SECRET = process.env.JWT_SECRET || "yourSecretKey";
+
+export const authMiddleware = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "No token provided, authorization denied" });
   }
-};
 
-// GET AVAILABLE ROOMS FOR A DATE
-export const getAvailableRooms = async (req, res) => {
+  const token = authHeader.split(" ")[1];
+
   try {
-    const { date } = req.query;
-    const bookedRooms = await Booking.find({ date }).select("room");
-
-    const bookedRoomIds = bookedRooms.map((b) => b.room.toString());
-    const availableRooms = await Room.find({ _id: { $nin: bookedRoomIds } });
-
-    res.json(availableRooms);
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded; // { id, role }
+    next();
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(401).json({ message: "Token is invalid or expired" });
   }
 };

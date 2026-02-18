@@ -1,17 +1,29 @@
-import mongoose from "mongoose";
+import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 
-// Load MongoDB URI from environment variables
-const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/swahilipot";
+dotenv.config();
+
+const sequelize = new Sequelize(
+  process.env.DB_NAME || "swahilipot",
+  process.env.DB_USER || "root",
+  process.env.DB_PASSWORD || "",
+  {
+    host: process.env.DB_HOST || "localhost",
+    dialect: "mysql",
+    logging: false,
+  }
+);
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("✅ MongoDB connected successfully");
+    await sequelize.authenticate();
+    console.log("✅ MySQL connected successfully");
+    await sequelize.sync({ alter: true }); // auto-create/update tables
+    console.log("✅ Database tables synced");
   } catch (error) {
-    console.error("❌ MongoDB connection failed:", error.message);
-    process.exit(1); // Exit process if DB fails
+    console.error("❌ MySQL connection failed:", error.message);
+    process.exit(1);
   }
 };
+
+export default sequelize;

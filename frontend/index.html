@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Booking System</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
+
+  <!-- Header -->
+  <header class="w-full max-w-4xl mb-6">
+    <h1 class="text-3xl font-bold text-center text-blue-600">Room Booking System</h1>
+  </header>
+
+  <!-- Login Form -->
+  <section id="login-section" class="w-full max-w-md bg-white p-6 rounded-xl shadow-md mb-6">
+    <h2 class="text-xl font-semibold mb-4">Login</h2>
+    <form id="loginForm" class="flex flex-col gap-4">
+      <input 
+        type="email" 
+        id="email" 
+        placeholder="Enter your email" 
+        required
+        class="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <input 
+        type="password" 
+        id="password" 
+        placeholder="Enter your password" 
+        required
+        class="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <button 
+        type="submit" 
+        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+      >
+        Login
+      </button>
+    </form>
+  </section>
+
+  <!-- Rooms Display Section -->
+  <section id="rooms-section" class="w-full max-w-4xl">
+    <h2 class="text-2xl font-semibold mb-4">Available Rooms</h2>
+    <div id="rooms" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Rooms will be injected here by app.js -->
+    </div>
+  </section>
+
+  <!-- Logout Button -->
+  <section class="w-full max-w-4xl mt-6 text-center">
+    <button 
+      id="logoutBtn" 
+      class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+    >
+      Logout
+    </button>
+  </section>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="main.js"></script>
+
+</body>
+</html>

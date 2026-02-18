@@ -1,19 +1,37 @@
-import mongoose from "mongoose";
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
 import { BOOKING_STATUS } from "../config/constants.js";
+import User from "./User.js";
+import Room from "./Room.js";
 
-const bookingSchema = new mongoose.Schema(
+const Booking = sequelize.define(
+  "Booking",
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    room: { type: mongoose.Schema.Types.ObjectId, ref: "Room", required: true },
-    date: { type: Date, required: true },
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
     status: {
-      type: String,
-      enum: [BOOKING_STATUS.PENDING, BOOKING_STATUS.APPROVED, BOOKING_STATUS.REJECTED],
-      default: BOOKING_STATUS.PENDING,
+      type: DataTypes.ENUM(
+        BOOKING_STATUS.PENDING,
+        BOOKING_STATUS.APPROVED,
+        BOOKING_STATUS.REJECTED
+      ),
+      defaultValue: BOOKING_STATUS.PENDING,
     },
   },
-  { timestamps: true }
+  { tableName: "bookings", timestamps: true }
 );
 
-const Booking = mongoose.model("Booking", bookingSchema);
+// Associations
+Booking.belongsTo(User, { foreignKey: "userId", as: "user" });
+Booking.belongsTo(Room, { foreignKey: "roomId", as: "room" });
+User.hasMany(Booking, { foreignKey: "userId" });
+Room.hasMany(Booking, { foreignKey: "roomId" });
+
 export default Booking;

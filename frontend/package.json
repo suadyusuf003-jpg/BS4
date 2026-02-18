@@ -1,5 +1,15 @@
 {
+  "name": "bs4-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Room Booking System",
+  "main": "main.js",
+  "scripts": {
+    "start": "cd ../vite-project && npm run dev",
+    "dev": "cd ../vite-project && npm run dev"
+  },
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "tailwindcss": "^3.4.19"
+    "live-server": "^1.2.2"
   }
 }
