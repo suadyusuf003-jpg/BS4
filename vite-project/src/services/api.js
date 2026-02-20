@@ -17,9 +17,14 @@ async function request(endpoint, method = 'GET', body = null) {
 // Auth
 export const loginUser = (email, password) => request('/auth/login', 'POST', { email, password });
 export const registerUser = (name, email, password) => request('/auth/register', 'POST', { name, email, password });
-export const logoutUser = () => localStorage.removeItem('token');
+export const logoutUser = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+};
 export const getToken = () => localStorage.getItem('token');
+export const getUserRole = () => localStorage.getItem('role');
 export const isLoggedIn = () => !!localStorage.getItem('token');
+export const isAdmin = () => localStorage.getItem('role') === 'ADMIN';
 
 // Rooms
 export const fetchRooms = () => request('/rooms');

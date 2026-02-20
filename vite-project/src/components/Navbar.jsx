@@ -1,10 +1,11 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { isLoggedIn, logoutUser } from '../services/api.js'
+import { isLoggedIn, isAdmin, logoutUser } from '../services/api.js'
 
 export default function Navbar() {
     const navigate = useNavigate()
     const location = useLocation()
     const loggedIn = isLoggedIn()
+    const admin = isAdmin()
 
     const handleLogout = () => {
         logoutUser()
@@ -12,6 +13,16 @@ export default function Navbar() {
     }
 
     const isActive = (path) => location.pathname === path
+
+    const navLinks = [
+        { to: '/', label: 'Home' },
+        { to: '/booking', label: 'Book Room' },
+        { to: '/dashboard', label: 'Dashboard' },
+    ]
+
+    if (admin) {
+        navLinks.push({ to: '/admin', label: 'Admin' })
+    }
 
     return (
         <nav style={{
@@ -33,11 +44,7 @@ export default function Navbar() {
 
                     {/* Nav links */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                        {[
-                            { to: '/', label: 'Home' },
-                            { to: '/booking', label: 'Book Room' },
-                            { to: '/dashboard', label: 'Dashboard' },
-                        ].map(({ to, label }) => (
+                        {navLinks.map(({ to, label }) => (
                             <Link
                                 key={to}
                                 to={to}

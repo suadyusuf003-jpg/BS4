@@ -1,16 +1,17 @@
 import { Navigate } from 'react-router-dom';
-import { isLoggedIn } from '../services/api.js';
+import { isLoggedIn, isAdmin } from '../services/api.js';
 
 const ProtectedRoute = ({ children, adminOnly = false }) => {
     const loggedIn = isLoggedIn();
+    const admin = isAdmin();
 
     if (!loggedIn) {
         return <Navigate to="/login" replace />;
     }
 
-    // If we had role checking in api.js, we would use it here.
-    // For now, we'll assume the user is authorized.
-    // In a real app, we'd decode the JWT to check roles.
+    if (adminOnly && !admin) {
+        return <Navigate to="/dashboard" replace />;
+    }
 
     return children;
 };
