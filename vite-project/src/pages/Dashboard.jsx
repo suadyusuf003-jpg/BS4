@@ -91,18 +91,26 @@ export default function Dashboard() {
                                     <div style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
                                         📅 {new Date(booking.date).toLocaleDateString('en-GB', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
                                     </div>
+                                    <div style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
+                                        🕒 {booking.startTime?.slice(0, 5)} - {booking.endTime?.slice(0, 5)} ({booking.duration} hrs)
+                                    </div>
+                                    {booking.totalPrice > 0 && (
+                                        <div style={{ fontWeight: 700, color: 'var(--accent)', fontSize: '0.9rem', marginTop: '0.2rem' }}>
+                                            Ksh {booking.totalPrice}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                 <span className={STATUS_CLASSES[booking.status] || 'badge badge-pending'}>
                                     {booking.status || 'Pending'}
                                 </span>
-                                {booking.status === 'Pending' && (
+                                {booking.status !== 'Rejected' && (
                                     <button
                                         onClick={() => handleCancel(booking.id)}
                                         style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', padding: '0.35rem 0.85rem', borderRadius: '0.4rem', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, transition: 'all 0.2s' }}
                                     >
-                                        Cancel
+                                        {booking.status === 'Approved' ? 'Delete' : 'Cancel'}
                                     </button>
                                 )}
                             </div>

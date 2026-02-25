@@ -31,6 +31,10 @@ export const fetchRooms = () => request('/rooms');
 export const fetchAvailableRooms = (date) => request(`/rooms/available?date=${date}`);
 
 // Bookings
-export const createBooking = (roomId, date) => request('/bookings', 'POST', { roomId, date });
+export const createBooking = (roomId, date, startTime, endTime) => request('/bookings', 'POST', { roomId, date, startTime, endTime });
 export const fetchBookings = () => request('/bookings');
 export const cancelBooking = (id) => request(`/bookings/${id}`, 'DELETE');
+
+// Admin
+export const fetchAllBookings = () => request('/bookings/all');
+export const updateBookingStatus = (id, status) => request(`/bookings/${id}/status`, 'PATCH', { status });

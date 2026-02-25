@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import { fetchRooms } from '../services/api.js'
 
 const MOCK_ROOMS = [
-    { id: 1, name: 'Innovation Lab', capacity: 20, description: 'A modern space for tech workshops and hackathons.' },
-    { id: 2, name: 'Conference Hall A', capacity: 50, description: 'Fully equipped conference room with projector and sound system.' },
-    { id: 3, name: 'Creative Studio', capacity: 12, description: 'Ideal for design sprints, brainstorming, and creative sessions.' },
-    { id: 4, name: 'Training Room', capacity: 30, description: 'Comfortable training space with whiteboards and flip charts.' },
-    { id: 5, name: 'Board Room', capacity: 10, description: 'Executive meeting room with video conferencing capabilities.' },
-    { id: 6, name: 'Co-working Space', capacity: 40, description: 'Open co-working area with fast Wi-Fi and ergonomic seating.' },
+    { id: 1, name: 'Innovation Lab', capacity: 20, hourlyPrice: 1500, description: 'A modern space for tech workshops and hackathons.' },
+    { id: 2, name: 'Conference Hall A', capacity: 50, hourlyPrice: 5000, description: 'Fully equipped conference room with projector and sound system.' },
+    { id: 3, name: 'Creative Studio', capacity: 12, hourlyPrice: 1000, description: 'Ideal for design sprints, brainstorming, and creative sessions.' },
+    { id: 4, name: 'Training Room', capacity: 30, hourlyPrice: 2000, description: 'Comfortable training space with whiteboards and flip charts.' },
+    { id: 5, name: 'Board Room', capacity: 10, hourlyPrice: 1000, description: 'Executive meeting room with video conferencing capabilities.' },
+    { id: 6, name: 'Co-working Space', capacity: 40, hourlyPrice: 3000, description: 'Open co-working area with fast Wi-Fi and ergonomic seating.' },
 ]
 
 export default function Home() {
@@ -103,6 +103,12 @@ export default function Home() {
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
                                     👥 Capacity: <strong style={{ color: 'var(--text-primary)' }}>{room.capacity}</strong>
+                                    {room.hourlyPrice && (
+                                        <>
+                                            <br />
+                                            💰 Price: <strong style={{ color: 'var(--accent)' }}>Ksh {room.hourlyPrice}/hr</strong>
+                                        </>
+                                    )}
                                 </span>
                                 <Link to="/booking">
                                     <button className="btn-primary" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}>

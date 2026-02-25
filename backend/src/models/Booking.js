@@ -24,6 +24,22 @@ const Booking = sequelize.define(
       ),
       defaultValue: BOOKING_STATUS.PENDING,
     },
+    startTime: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
+    endTime: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
+    duration: {
+      type: DataTypes.DECIMAL(5, 2),
+      allowNull: false,
+    },
+    totalPrice: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+    },
   },
   { tableName: "bookings", timestamps: true }
 );
